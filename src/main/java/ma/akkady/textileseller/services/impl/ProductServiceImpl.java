@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author younes akkad
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;

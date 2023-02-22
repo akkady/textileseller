@@ -8,6 +8,10 @@ import ma.akkady.textileseller.utils.ReferenceGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * @author younes akkad
+ */
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {

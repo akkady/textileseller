@@ -29,12 +29,7 @@ public class VendorServiceTest {
     private VendorMapper vendorMapper;
 
     @InjectMocks
-    private VendorService vendorService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    private VendorServiceImpl vendorService;
 
     @Test
     public void testCreate() {

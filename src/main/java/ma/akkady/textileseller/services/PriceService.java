@@ -8,9 +8,12 @@ import java.util.List;
 public interface PriceService {
     List<Currency> getCurrencies();
 
-    List<Price> getPricesByProductCode(String code);
+    List<Price> getPricesByProductRef(String ref);
 
-    Price createForProduct(Price price, String productCode);
+    Price createForProduct(Price price, String productRef);
 
-    Price updateValue(Price);
+    Price updateValue(Price price);
+
+    Price getPriceWithCurrencyForProduct(Currency currency, String productRef);
+
 }

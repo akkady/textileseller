@@ -18,8 +18,8 @@ import java.util.Optional;
 /**
  * @author akkad younes
  */
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;

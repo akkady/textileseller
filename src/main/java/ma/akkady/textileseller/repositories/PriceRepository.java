@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PriceRepository extends JpaRepository<Price,Long> {
-    Optional<List<Price>> findByProductCode(String productCode);
+    Optional<List<Price>> findByProductRef(String productRef);
 }

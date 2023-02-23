@@ -4,11 +4,12 @@ import ma.akkady.textileseller.entities.Currency;
 import ma.akkady.textileseller.entities.Price;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PriceService {
     List<Currency> getCurrencies();
 
-    List<Price> getPricesByProductRef(String ref);
+    Set<Price> getPricesByProductRef(String ref);
 
     Price createForProduct(Price price, String productRef);
 

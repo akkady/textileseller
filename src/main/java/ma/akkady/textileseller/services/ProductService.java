@@ -15,4 +15,6 @@ public interface ProductService {
     public Product create(Product product);
 
     List<Product> findProductsByName(String name);
+
+    Product update(Product product);
 }

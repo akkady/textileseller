@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/api/v1/clients")
 @RequiredArgsConstructor
 @ApiOperation(value = "Client API", tags = {"Client"})
 public class ClientController {

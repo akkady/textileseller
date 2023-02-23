@@ -5,6 +5,7 @@ import ma.akkady.textileseller.entities.Client;
 import ma.akkady.textileseller.repositories.ClientRepository;
 import ma.akkady.textileseller.services.ClientService;
 import ma.akkady.textileseller.utils.ReferenceGenerator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client create(Client client) {
-        client.setCode(ReferenceGenerator.genStringRef());
+        client.setCode(RandomStringUtils.randomNumeric(12));
         return clientRepository.save(client);
     }
 

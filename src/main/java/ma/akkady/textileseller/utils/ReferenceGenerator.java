@@ -1,16 +1,16 @@
 package ma.akkady.textileseller.utils;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.UUID;
 
 public class ReferenceGenerator {
     public static Long gen() {
-        UUID uuid = UUID.randomUUID();
-        String uuidStr = uuid.toString().replaceAll("-", "");
-        return Long.parseLong(uuidStr, 16);
+        return Long.parseLong(RandomStringUtils.randomNumeric(14));
     }
 
     public static String genStringRef() {
-        return String.valueOf(gen());
+        return RandomStringUtils.randomAlphanumeric(14);
     }
     public static String genComplexRef() {
         return UUID.randomUUID().toString();

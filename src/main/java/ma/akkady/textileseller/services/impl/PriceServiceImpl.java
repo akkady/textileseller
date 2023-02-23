@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author younes akkad
@@ -31,26 +32,29 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public List<Price> getPricesByProductRef(String ref) {
+    public Set<Price> getPricesByProductRef(String ref) {
         productService.getProduct(ref);
-        return priceRepository.findByProductCode(ref)
-                .orElseThrow(() -> new PriceNotFoundException("No prices were found for this product"));
+        return productService.getProduct(ref).getPrices();
     }
 
     @Override
     public Price createForProduct(Price price, String productRef) {
-        Assert.notNull(productRef,"Make sure to provide a valid product reference");
-        Assert.notNull(price.getValue(), "The value should not be null");
-        Assert.notNull(price.getCurrency(),"The currency of should not be null");
+        Assert.notNull(productRef, "Make sure to provide a valid product reference");
+        Assert.notNull(price.getPriceValue(), "The value should not be null");
+        Assert.notNull(price.getCurrency(), "The currency of should not be null");
+
+        price = priceRepository.save(price);
         Product product = productService.getProduct(productRef);
-        price.setProduct(product);
-        return priceRepository.save(price);
+        product.getPrices().add(price);
+        productService.update(product);
+
+        return price;
     }
 
     @Override
     public Price updateValue(Price price) {
-        Assert.notNull(price.getValue(), "The value should not be null");
-        Assert.notNull(price.getCurrency(),"The currency of should not be null");
+        Assert.notNull(price.getPriceValue(), "The value should not be null");
+        Assert.notNull(price.getCurrency(), "The currency of should not be null");
         return priceRepository.save(price);
     }
 

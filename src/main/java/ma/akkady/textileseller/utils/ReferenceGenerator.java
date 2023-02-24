@@ -9,6 +9,9 @@ public class ReferenceGenerator {
         return Long.parseLong(RandomStringUtils.randomNumeric(14));
     }
 
+    public static String genNumeric() {
+        return RandomStringUtils.randomNumeric(14);
+    }
     public static String genStringRef() {
         return RandomStringUtils.randomAlphanumeric(14);
     }

@@ -1,6 +1,10 @@
 package ma.akkady.textileseller.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,6 +12,9 @@ import java.util.Set;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "invoices")
 public class Invoice {
@@ -16,8 +23,10 @@ public class Invoice {
     @SequenceGenerator(name = "invoiceSequence")
     @Column(name = "id")
     private Long id;
-    private String reference;
-    private String currency;
+    @Column(nullable = false,unique = true)
+    private String ref;
+    @Enumerated(EnumType.ORDINAL)
+    private Currency currency;
     @ManyToOne
     @JoinColumn(name="vendorId",referencedColumnName = "id")
     private Vendor vendor;
@@ -27,4 +36,7 @@ public class Invoice {
     @OneToMany(mappedBy = "invoice")
     private Set<InvoiceEntry> entries = new HashSet<>();
 
+    @ManyToMany
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
 }

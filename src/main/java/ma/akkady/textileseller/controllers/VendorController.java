@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/vendors")
-@Api(tags = "Vendor Controller")
+@Api(tags = "Vendors")
 public class VendorController {
 
     private final VendorService vendorService;

@@ -10,6 +10,8 @@ import ma.akkady.textileseller.mappers.VendorMapper;
 import ma.akkady.textileseller.repositories.VendorRepository;
 import ma.akkady.textileseller.services.VendorService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -21,25 +23,30 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class VendorServiceImpl implements VendorService {
+
+    private final Logger log = LoggerFactory.getLogger(VendorServiceImpl.class);
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
 
     @Override
     public VendorInfoDto create(VendorInfoDto vendor) {
+        log.info("Creating Vendor {}", vendor);
         return vendorMapper.toDto(vendorRepository.save(vendorMapper.toEntity(vendor)));
     }
 
 
     @Override
     public VendorInfoDto getVendor(String userName) {
+        log.info("Retrieve vendor by username {}", userName);
         Optional<Vendor> storedEntity = vendorRepository.findByUsername(userName);
         return storedEntity
                 .map(vendorMapper::toDto)
-                .orElseThrow(() -> new NoSuchElementException());
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override
     public void createOrUpdatePwd(VendorSubscriptionRequest vendorInReq) {
+        log.info("Creating or updating password for vendor with username {}", vendorInReq.getUsername());
         Vendor vendor = vendorRepository.findByUsername(vendorInReq.getUsername())
                 .orElseThrow(() -> new UserNotFoundException("Vendor not found"));
 

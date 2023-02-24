@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 public class InvoiceEntryDto {
 
     @NotNull(message = "Product id should not be empty")
-    private long productId;
+    private Long productId;
     @NotNull(message = "Invoice id should not be empty")
-    private long invoiceId;
+    private Long invoiceId;
     @NotNull(message = "entry value should not be empty")
-    private long entry;
+    private Double entry;
 
 
 }

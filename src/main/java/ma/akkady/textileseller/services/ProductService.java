@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductService {
 
     public Product getProduct(String  ref);
+    public Product getProductById(Long id);
 
     public List<Product> getAll();
 

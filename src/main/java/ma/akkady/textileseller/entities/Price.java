@@ -22,6 +22,6 @@ public class Price {
     @Column(nullable = false)
     private double priceValue;
     @ManyToOne
-    @JsonIgnore ()
+    @JsonIgnore
     private Product product;
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/clients")
 @RequiredArgsConstructor
-@ApiOperation(value = "Client API", tags = {"Client"})
+@ApiOperation(value = "Client API", tags = "Clients")
 public class ClientController {
     private final ClientService clientService;
 

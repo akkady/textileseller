@@ -2,6 +2,7 @@ package ma.akkady.textileseller.entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,14 @@ public class Product {
     @SequenceGenerator(name = "productSequence")
     @Column(name = "id")
     private Long id;
-    @Column(unique = true)
+    @Column(nullable = false,unique = true)
     private String ref;
     private String name;
     private String description;
 
     @OneToMany
     @JoinColumn(name = "priceId")
+    @JsonIgnore
     private Set<Price> prices = new HashSet<>();
+
 }

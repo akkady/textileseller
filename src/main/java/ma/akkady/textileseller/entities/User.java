@@ -1,21 +1,18 @@
 package ma.akkady.textileseller.entities;
 
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+
+@Data @AllArgsConstructor @NoArgsConstructor
 @MappedSuperclass
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
     @SequenceGenerator(name = "userSequence")
-    @Column(name = "id")
     private Long id;
     private String name;
     private String phone;

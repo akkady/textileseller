@@ -1,10 +1,14 @@
 package ma.akkady.textileseller.services;
 
 import ma.akkady.textileseller.dtos.VendorInfoDto;
-import ma.akkady.textileseller.dtos.VendorSubscriptionRequest;
+import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
+
+import java.util.List;
 
 public interface VendorService {
-    public VendorInfoDto create(VendorInfoDto vendor);
-    public VendorInfoDto getVendor(String userName);
-    public void createOrUpdatePwd(VendorSubscriptionRequest vendorSubreption) ;
+     VendorInfoDto create(VendorInfoDto vendor);
+     VendorInfoDto getVendor(String userName);
+
+    List<VendorInfoDto> getVendors();
+     void createOrUpdatePwd(VendorSubscriptionRequestDto vendorSubreption) ;
 }

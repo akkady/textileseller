@@ -3,7 +3,7 @@ package ma.akkady.textileseller.dtos;
 import lombok.Data;
 
 @Data
-public class VendorSubscriptionRequest {
+public class VendorSubscriptionRequestDto {
     private String username;
     private String newPwd;
     private String pwdConfirmation;

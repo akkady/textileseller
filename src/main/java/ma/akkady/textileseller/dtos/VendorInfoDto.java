@@ -16,5 +16,5 @@ public class VendorInfoDto extends UserDto {
     private String phone;
     private String address;
     private String imageUrl;
-    private String userName;
+    private String username;
 }

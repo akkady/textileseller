@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-        log.info("Retrieve product by ref {}",id);
+        log.info("Retrieve product by id {}",id);
         return productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 

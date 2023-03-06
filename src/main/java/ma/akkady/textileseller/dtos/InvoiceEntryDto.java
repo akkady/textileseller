@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class InvoiceEntryDto {
-
+    private Long id;
     @NotNull(message = "Product id should not be empty")
     private Long productId;
     @NotNull(message = "Invoice id should not be empty")

@@ -4,11 +4,12 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
-@Entity
-@Table(name = "prices")
+@Data @NoArgsConstructor @AllArgsConstructor
+@Entity @Table(name = "prices")
 public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "priceSequence")
@@ -22,6 +23,5 @@ public class Price {
     @Column(nullable = false)
     private double priceValue;
     @ManyToOne
-    @JsonIgnore
     private Product product;
 }

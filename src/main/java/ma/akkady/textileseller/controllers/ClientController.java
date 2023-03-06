@@ -13,8 +13,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
+import static ma.akkady.textileseller.constants.MappingUrls.API_URL;
+import static ma.akkady.textileseller.constants.MappingUrls.CLIENTS;
+
 @RestController
-@RequestMapping("/api/v1/clients")
+@RequestMapping(API_URL + CLIENTS.BASE_URL)
 @RequiredArgsConstructor
 @ApiOperation(value = "Client API", tags = "Clients")
 public class ClientController {
@@ -33,7 +36,7 @@ public class ClientController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all clients", tags = {"Client"})
+    @ApiOperation(value = CLIENTS.GET_API_DESCRIPTION , tags = {"Client"})
     public List<Client> getAll() {
         return clientService.getAll();
     }

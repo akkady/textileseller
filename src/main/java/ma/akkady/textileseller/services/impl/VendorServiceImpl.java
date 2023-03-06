@@ -2,7 +2,7 @@ package ma.akkady.textileseller.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.VendorInfoDto;
-import ma.akkady.textileseller.dtos.VendorSubscriptionRequest;
+import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
 import ma.akkady.textileseller.entities.Vendor;
 import ma.akkady.textileseller.exceptions.PasswordConfirmationException;
 import ma.akkady.textileseller.exceptions.UserNotFoundException;
@@ -14,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author akkad younes
@@ -45,7 +47,14 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public void createOrUpdatePwd(VendorSubscriptionRequest vendorInReq) {
+    public List<VendorInfoDto> getVendors() {
+        return vendorRepository.findAll()
+                .stream().map(vendorMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void createOrUpdatePwd(VendorSubscriptionRequestDto vendorInReq) {
         log.info("Creating or updating password for vendor with username {}", vendorInReq.getUsername());
         Vendor vendor = vendorRepository.findByUsername(vendorInReq.getUsername())
                 .orElseThrow(() -> new UserNotFoundException("Vendor not found"));

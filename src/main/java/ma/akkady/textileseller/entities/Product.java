@@ -10,25 +10,23 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@Entity
-@Table(name = "products")
-@AllArgsConstructor
-@NoArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor
+@Entity @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productSequence")
     @SequenceGenerator(name = "productSequence")
-    @Column(name = "id")
     private Long id;
     @Column(nullable = false,unique = true)
     private String ref;
     private String name;
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "priceId")
     @JsonIgnore
-    private Set<Price> prices = new HashSet<>();
+    @OneToMany(mappedBy = "product")
+    private Set<Price> prices ;
 
+
+    @OneToMany(mappedBy = "product")
+    private Set<InvoiceEntry> entries ;
 }

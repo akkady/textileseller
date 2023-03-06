@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,8 @@ public class InvoiceController {
 
     @PostMapping("/init")
     @ApiOperation(value = "Initialize a new invoice", response = InvoiceToDisplayDto.class)
-    public ResponseEntity<InvoiceToDisplayDto> init(@RequestBody @Valid InvoiceInitDto initDto) {
-        InvoiceToDisplayDto invoice = invoiceService.init(initDto);
+    public ResponseEntity<InvoiceToDisplayDto> init(@RequestParam("clientCode") @NotBlank String clientId ,@RequestParam("vendorId") @NotNull Long vendorId) {
+        InvoiceToDisplayDto invoice = invoiceService.init(clientId,vendorId);
         return new ResponseEntity<>(invoice, HttpStatus.CREATED);
     }
 

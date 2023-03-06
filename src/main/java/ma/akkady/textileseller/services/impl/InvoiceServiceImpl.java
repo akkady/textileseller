@@ -3,10 +3,10 @@ package ma.akkady.textileseller.services.impl;
 import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
-import ma.akkady.textileseller.dtos.InvoiceInitDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
 import ma.akkady.textileseller.entities.*;
 import ma.akkady.textileseller.exceptions.InvoiceNotFoundException;
+import ma.akkady.textileseller.mappers.InvoiceEntryMapper;
 import ma.akkady.textileseller.mappers.InvoiceMapper;
 import ma.akkady.textileseller.repositories.ClientRepository;
 import ma.akkady.textileseller.repositories.InvoiceEntryRepository;
@@ -20,10 +20,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class InvoiceServiceImpl implements InvoiceService {
 
@@ -34,29 +34,26 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final ClientRepository clientRepository;
     private final VendorRepository vendorRepository;
     private final InvoiceMapper invoiceMapper;
+    private final InvoiceEntryMapper entryMapper;
 
-    @Transactional
     @Override
-    public InvoiceToDisplayDto init(InvoiceInitDto initDto) {
-        log.info("Initializing invoice with product {} and client {}", initDto.getProductRef(), initDto.getClientCode());
+    public InvoiceToDisplayDto init(String clientCode, Long vendorId) {
+        log.info("Initializing invoice for client {}", clientCode);
         String invoiceReference = ReferenceGenerator.genNumeric();
-        Product product = productService.getProduct(initDto.getProductRef());
-        Client client = clientRepository.findByCode(initDto.getClientCode());
-        Vendor vendor = vendorRepository.getReferenceById(initDto.getVendorId());
+        Client client = clientRepository.findByCode(clientCode);
+        Vendor vendor = vendorRepository.getReferenceById(vendorId);
 
-        Invoice invoice = Invoice.builder()
-                .ref(invoiceReference)
-                .products(Collections.singleton(product))
-                .client(client)
-                .vendor(vendor)
-                .build();
+        Invoice invoice = new Invoice();
+        invoice.setRef(invoiceReference);
+        invoice.setClient(client);
+        invoice.setVendor(vendor);
+
         invoice = invoiceRepository.save(invoice);
 
         return invoiceMapper.toDisplayedDto(invoice);
     }
 
 
-    @Transactional
     @Override
     public InvoiceCurrencyDto chooseCurrency(InvoiceCurrencyDto invoiceCurrency) {
         log.info("Setting currency {} for invoice with id {}", invoiceCurrency.getCurrency(), invoiceCurrency.getInvoiceId());
@@ -72,24 +69,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceCurrency;
     }
 
-
-    @Transactional
     @Override
-    public InvoiceEntryDto addEntry(InvoiceEntryDto invoiceEntry) {
-        log.info("Adding entry with value {} to invoice with id {}", invoiceEntry.getEntry(), invoiceEntry.getInvoiceId());
-        Product product = productService.getProductById(invoiceEntry.getProductId());
-        Invoice invoice = invoiceRepository.findById(invoiceEntry.getInvoiceId())
-                .orElseThrow(InvoiceNotFoundException::new);
+    public InvoiceEntryDto addEntry(InvoiceEntryDto entryDto) {
+        log.info("Adding entry with value {} to invoice with id {}", entryDto.getEntry(), entryDto.getInvoiceId());
+//        Product product = productService.getProductById(entryDto.getProductId());
+//        Invoice invoice = invoiceRepository.findById(entryDto.getInvoiceId())
+//                .orElseThrow(InvoiceNotFoundException::new);
 
-        InvoiceEntry entry = InvoiceEntry.builder()
-                .product(product)
-                .invoice(invoice)
-                .entry(invoiceEntry.getEntry())
-                .build();
+        InvoiceEntry entry = entryMapper.toEntity(entryDto);
+
         entry = entryRepository.save(entry);
-        invoice.getEntries().add(entry);
 
-        return invoiceEntry;
+        return entryMapper.toDto(entry);
     }
 
     @Override

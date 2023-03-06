@@ -23,6 +23,9 @@ public interface InvoiceMapper {
     List<InvoiceToDisplayDto> toDisplayedDtos(List<Invoice> invoices);
 
     default Map<Product, List<Double>> entriesToMap (Set<InvoiceEntry> entries) {
+        if (entries == null) {
+            return null;
+        }
         return entries.stream()
                 .collect(Collectors.groupingBy(InvoiceEntry::getProduct, Collectors.mapping(InvoiceEntry::getEntry, Collectors.toList())));
     }

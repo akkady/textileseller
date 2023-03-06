@@ -11,7 +11,6 @@ import ma.akkady.textileseller.entities.Currency;
 @AllArgsConstructor
 @Builder
 public class InvoiceInitDto {
-    private String productRef;
     private String clientCode;
     private Long vendorId;
 

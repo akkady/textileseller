@@ -1,18 +1,15 @@
 package ma.akkady.textileseller.services.impl;
 
 import ma.akkady.textileseller.dtos.VendorInfoDto;
-import ma.akkady.textileseller.dtos.VendorSubscriptionRequest;
+import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
 import ma.akkady.textileseller.entities.Vendor;
 import ma.akkady.textileseller.mappers.VendorMapper;
 import ma.akkady.textileseller.repositories.VendorRepository;
-import ma.akkady.textileseller.services.VendorService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.NoSuchElementException;
@@ -69,7 +66,7 @@ public class VendorServiceTest {
         vendor.setUsername("test");
         vendor.setPassword("oldPassword");
 
-        VendorSubscriptionRequest dto = new VendorSubscriptionRequest();
+        VendorSubscriptionRequestDto dto = new VendorSubscriptionRequestDto();
         dto.setUsername("test");
         dto.setOldPwd("oldPassword");
         dto.setNewPwd("newPassword");
@@ -87,7 +84,7 @@ public class VendorServiceTest {
         vendor.setUsername("test");
         vendor.setPassword("oldPassword");
 
-        VendorSubscriptionRequest dto = new VendorSubscriptionRequest();
+        VendorSubscriptionRequestDto dto = new VendorSubscriptionRequestDto();
         dto.setUsername("test");
         dto.setOldPwd("wrongPassword");
         dto.setNewPwd("newPassword");
@@ -103,7 +100,7 @@ public class VendorServiceTest {
         vendor.setUsername("test");
         vendor.setPassword("oldPassword");
 
-        VendorSubscriptionRequest dto = new VendorSubscriptionRequest();
+        VendorSubscriptionRequestDto dto = new VendorSubscriptionRequestDto();
         dto.setUsername("test");
         dto.setOldPwd("oldPassword");
         dto.setNewPwd("newPassword");
@@ -115,7 +112,7 @@ public class VendorServiceTest {
 
     @Test
     public void testCreateOrUpdatePwdWithVendorNotFound() {
-        VendorSubscriptionRequest dto = new VendorSubscriptionRequest();
+        VendorSubscriptionRequestDto dto = new VendorSubscriptionRequestDto();
         dto.setUsername("test");
         dto.setOldPwd("oldPassword");
         dto.setNewPwd("newPassword");

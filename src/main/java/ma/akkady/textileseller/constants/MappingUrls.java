@@ -21,6 +21,14 @@ public class MappingUrls {
         public static final String SEARCH = "/search";
         public static final String GET_BY_ID = SEARCH + "/{id}";
 
+    }
+
+    public static class PRODUCTS {
+        public static final String TAG = "Products";
+        public static final String BASE_URL = "/products";
+        public static final String SEARCH = "/search";
+        public static final String SEARCH_BY_ID = SEARCH + "/{id}";
 
     }
+
 }

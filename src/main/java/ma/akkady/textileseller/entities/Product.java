@@ -17,16 +17,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productSequence")
     @SequenceGenerator(name = "productSequence")
     private Long id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String ref;
     private String name;
     private String description;
-
+    @OneToMany(mappedBy = "product")
+    private Set<Price> prices;
     @JsonIgnore
     @OneToMany(mappedBy = "product")
-    private Set<Price> prices ;
-
-
-    @OneToMany(mappedBy = "product")
-    private Set<InvoiceEntry> entries ;
+    private Set<InvoiceEntry> entries;
 }

@@ -8,15 +8,15 @@ import ma.akkady.textileseller.services.ProductService;
 import ma.akkady.textileseller.utils.ReferenceGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * @author younes akkad
  */
-@Service
+@Service @Transactional
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
@@ -38,9 +38,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public Product getProduct(Long id) {
         log.info("Retrieve product by id {}",id);
-        return productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("No product was stored with id : " + id));
     }
 
     @Override
@@ -60,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product update(Product product) {
         log.info("Updating product with reference {}",product.getRef());
+        getProduct(product.getId());
         return productRepository.save(product);
     }
 }

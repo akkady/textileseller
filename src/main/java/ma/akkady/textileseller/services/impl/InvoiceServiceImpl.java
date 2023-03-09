@@ -73,7 +73,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceEntryDto addEntry(InvoiceEntryDto entryDto) {
         log.info("Adding entry with value {} to invoice with id {}", entryDto.getEntry(), entryDto.getInvoiceId());
-//        Product product = productService.getProductById(entryDto.getProductId());
+//        Product product = productService.getProduct(entryDto.getProductId());
 //        Invoice invoice = invoiceRepository.findById(entryDto.getInvoiceId())
 //                .orElseThrow(InvoiceNotFoundException::new);
 

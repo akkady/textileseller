@@ -16,9 +16,11 @@ import java.util.Set;
 public class Client extends User {
     @Column(unique = true)
     private String code;
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private Set<Invoice> invoices;
     public Client(String code, String name, String phone, String address) {
         super(null, name, phone, address);
+        this.code = code;
     }
 }

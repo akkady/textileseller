@@ -4,12 +4,13 @@ import ma.akkady.textileseller.entities.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client,Long> {
     void deleteByCode(String code);
 
-    List<Client> findByName(String name);
+    List<Client> findByNameContaining(String name);
 
-    Client findByCode(String code);
+    Optional<Client> findByCode(String code);
 }
 

@@ -4,8 +4,13 @@ public class MappingUrls {
     public static final String API_URL = "/api/v1";
 
     public static class CLIENTS {
+        public static final String TAG = "Clients";
         public static final String BASE_URL = "/clients";
+        public static final String BY_CODE = "/{code}";
+        public static final String SEARCH = "/search";
+        public static final String SEARCH_BY_CODE = SEARCH + BY_CODE;
         public static final String GET_API_DESCRIPTION = "Get all clients";
+
     }
 
     public static class VENDORS {

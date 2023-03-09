@@ -6,6 +6,7 @@ import ma.akkady.textileseller.dtos.InvoiceEntryDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
 import ma.akkady.textileseller.entities.*;
 import ma.akkady.textileseller.exceptions.InvoiceNotFoundException;
+import ma.akkady.textileseller.exceptions.UserNotFoundException;
 import ma.akkady.textileseller.mappers.InvoiceEntryMapper;
 import ma.akkady.textileseller.mappers.InvoiceMapper;
 import ma.akkady.textileseller.repositories.ClientRepository;
@@ -40,7 +41,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceToDisplayDto init(String clientCode, Long vendorId) {
         log.info("Initializing invoice for client {}", clientCode);
         String invoiceReference = ReferenceGenerator.genNumeric();
-        Client client = clientRepository.findByCode(clientCode);
+        Client client = clientRepository.findByCode(clientCode).orElseThrow(UserNotFoundException::new);
         Vendor vendor = vendorRepository.getReferenceById(vendorId);
 
         Invoice invoice = new Invoice();

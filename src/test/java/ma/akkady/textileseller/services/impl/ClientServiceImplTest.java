@@ -10,10 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ClientServiceImplTest {
@@ -27,16 +27,16 @@ public class ClientServiceImplTest {
     @Test
     public void testGetByCode() {
         // given
-        String code = "1";
+        String code = "6545245";
         Client expectedClient = new Client(code, "John Doe","0656545245", "john.doe@example.com");
-        when(clientRepository.findByCode(code)).thenReturn(expectedClient);
+        when(clientRepository.findByCode(code)).thenReturn(Optional.of(expectedClient));
 
         // when
         Client actualClient = clientService.getByCode(code);
 
         // then
         assertEquals(expectedClient, actualClient);
-        verify(clientRepository).findByCode(code);
+        verify(clientRepository,times(1)).findByCode(code);
     }
 
     @Test
@@ -46,14 +46,14 @@ public class ClientServiceImplTest {
         List<Client> expectedClients = Arrays.asList(
                 new Client("1", "John Doe","0656545245", "john.doe@example.com"),
                 new Client("2", "Jane Doe", "0656545245","jane.doe@example.com"));
-        when(clientRepository.findByName(name)).thenReturn(expectedClients);
+        when(clientRepository.findByNameContaining(name)).thenReturn(expectedClients);
 
         // when
         List<Client> actualClients = clientService.getByName(name);
 
         // then
         assertEquals(expectedClients, actualClients);
-        verify(clientRepository).findByName(name);
+        verify(clientRepository).findByNameContaining(name);
     }
 
     @Test
@@ -89,19 +89,20 @@ public class ClientServiceImplTest {
     @Test
     public void testDelete() {
         // given
-        String codeToDelete = "1";
-
+        String codeToDelete = "24515454561";
+        when(clientRepository.findByCode(codeToDelete)).thenReturn(Optional.of(new Client()));
         // when
         clientService.delete(codeToDelete);
 
         // then
-        verify(clientRepository).deleteByCode(codeToDelete);
+        verify(clientRepository,times(1)).deleteByCode(codeToDelete);
     }
 
     @Test
     public void testUpdate() {
         // given
         Client clientToUpdate = new Client("1", "John Doe","0656545245", "john.doe@example.com");
+        when(clientRepository.findByCode(clientToUpdate.getCode())).thenReturn(Optional.of(clientToUpdate));
         when(clientRepository.save(clientToUpdate)).thenReturn(clientToUpdate);
 
         // when
@@ -109,6 +110,7 @@ public class ClientServiceImplTest {
 
         // then
         assertEquals(clientToUpdate, updatedClient);
-        verify(clientRepository).save(clientToUpdate);
+        verify(clientRepository,times(1)).findByCode(clientToUpdate.getCode());
+        verify(clientRepository,times(1)).save(clientToUpdate);
     }
 }

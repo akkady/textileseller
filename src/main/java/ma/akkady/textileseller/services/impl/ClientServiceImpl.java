@@ -2,20 +2,21 @@ package ma.akkady.textileseller.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.entities.Client;
+import ma.akkady.textileseller.exceptions.UserNotFoundException;
 import ma.akkady.textileseller.repositories.ClientRepository;
 import ma.akkady.textileseller.services.ClientService;
-import ma.akkady.textileseller.utils.ReferenceGenerator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * @author younes akkad
  */
-@Service
+@Service @Transactional
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
@@ -25,13 +26,13 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getByCode(String code) {
         log.info("Retrieving client with code {}",code);
-        return clientRepository.findByCode(code);
+        return clientRepository.findByCode(code).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public List<Client> getByName(String name) {
         log.info("Retrieving clients with name contains {}",name);
-        return clientRepository.findByName(name);
+        return clientRepository.findByNameContaining(name);
     }
 
     @Override
@@ -50,12 +51,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void delete(String code) {
         log.info("Deleting client with code {}",code);
+        getByCode(code);
         clientRepository.deleteByCode(code);
     }
 
     @Override
     public Client update(Client client) {
         log.info("Updating clint info for client with code {}",client.getCode());
+        getByCode(client.getCode());
         return clientRepository.save(client);
     }
 }

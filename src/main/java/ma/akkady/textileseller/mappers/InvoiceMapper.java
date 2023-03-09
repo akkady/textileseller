@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public interface InvoiceMapper {
     InvoiceMapper INSTANCE = Mappers.getMapper(InvoiceMapper.class);
     @Mapping(target = "invoiceRef", source = "ref")
-    @Mapping(target = "entries", source = "entries" ,defaultExpression = "java(entriesToMap)")
+//    @Mapping(target = "entries", source = "entries" ,defaultExpression = "java(entriesToMap)")
     InvoiceToDisplayDto toDisplayedDto(Invoice invoice);
 
     List<InvoiceToDisplayDto> toDisplayedDtos(List<Invoice> invoices);

@@ -13,7 +13,9 @@ public class MappingUrls {
         public static final String BASE_URL = "/vendors";
         public static final String REGISTRATION = "/subscribe";
         public static final String PASSWORD = "/password";
-        public static final String GET_BY_USERNAME = "/{username}";
+        public static final String SEARCH = "/search";
+        public static final String GET_BY_ID = SEARCH + "/{id}";
+
 
     }
 }

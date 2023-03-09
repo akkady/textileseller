@@ -1,5 +1,6 @@
 package ma.akkady.textileseller.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Invoice {
     @ManyToOne
     private Client client;
     @OneToMany(mappedBy = "invoice")
+    @JsonBackReference
     private Set<InvoiceEntry> entries;
 
 

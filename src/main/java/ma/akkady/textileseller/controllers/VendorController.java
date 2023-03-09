@@ -8,11 +8,15 @@ import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.VendorInfoDto;
 import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
 import ma.akkady.textileseller.services.VendorService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import java.net.URI;
 import java.util.List;
 
 import static ma.akkady.textileseller.constants.MappingUrls.API_URL;
@@ -30,12 +34,14 @@ public class VendorController {
     @PostMapping(VENDORS.REGISTRATION)
     @ApiOperation(value = "Subscribe to the vendor service")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Vendor subscription successful"),
+            @ApiResponse(code = 201, message = "Vendor subscription successful"),
             @ApiResponse(code = 400, message = "Invalid vendor information provided"),
             @ApiResponse(code = 500, message = "Internal server error")
     })
-    public VendorInfoDto subscribe(@RequestBody @Valid VendorInfoDto vendorDto) {
-        return vendorService.create(vendorDto);
+    public ResponseEntity<VendorInfoDto> subscribe(@RequestBody @Valid VendorInfoDto vendorDto) {
+        VendorInfoDto createdVendor = vendorService.create(vendorDto);
+        return ResponseEntity.created(URI.create(API_URL + VENDORS.BASE_URL + "/" + createdVendor.getId()))
+                .body(createdVendor);
     }
 
     @PostMapping(VENDORS.PASSWORD)
@@ -49,16 +55,19 @@ public class VendorController {
         vendorService.createOrUpdatePwd(vendorSubscription);
     }
 
-    @GetMapping(VENDORS.GET_BY_USERNAME)
-    @ApiOperation(value = "Get vendor information by username")
+    @PutMapping
+    @ApiOperation(value = "update vendor info")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Vendor information retrieved successfully"),
-            @ApiResponse(code = 400, message = "Invalid username provided"),
+            @ApiResponse(code = 200, message = "Vendor info updated successfully"),
+            @ApiResponse(code = 400, message = "Invalid vendor subscription request provided"),
+            @ApiResponse(code = 404, message = "Vendor not found"),
             @ApiResponse(code = 500, message = "Internal server error")
     })
-    public VendorInfoDto getVendor(@PathVariable("username") @NotBlank String username) {
-        return vendorService.getVendor(username);
+    public ResponseEntity<VendorInfoDto> updateInfo(@RequestBody @Valid VendorInfoDto vendorInfo) {
+        return ResponseEntity.ok(vendorService.update(vendorInfo));
     }
+
+
     @GetMapping
     @ApiOperation(value = "Get All vendors")
     @ApiResponses(value = {
@@ -67,6 +76,28 @@ public class VendorController {
     })
     public List<VendorInfoDto> getVendors() {
         return vendorService.getVendors();
+    }
+
+    @GetMapping(value = VENDORS.SEARCH, params = "username")
+    @ApiOperation(value = "Get vendor information by username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Vendor information retrieved successfully"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
+    public VendorInfoDto getVendorByUsername(@RequestParam("username") @NotBlank String username) {
+        return vendorService.getByUsername(username);
+    }
+
+    @GetMapping(VENDORS.GET_BY_ID)
+    @ApiOperation(value = "Get vendor information by id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Vendor information retrieved successfully"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
+    public VendorInfoDto getVendorById(@PathVariable("id") @NotNull Long id) {
+        return vendorService.getById(id);
     }
 }
 

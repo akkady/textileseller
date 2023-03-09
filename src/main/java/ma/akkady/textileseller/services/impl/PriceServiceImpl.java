@@ -37,8 +37,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Set<Price> getPricesByProductRef(String ref) {
         log.info("Retrieve Price by product reference {}",ref);
-        productService.getProduct(ref);
-        return productService.getProduct(ref).getPrices();
+        return priceRepository.findByProductRef(ref).orElseThrow(PriceNotFoundException::new);
     }
 
     @Override

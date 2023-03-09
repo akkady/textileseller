@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VendorInfoDto extends UserDto {
+    private Long id;
     private String name;
     private String phone;
     private String address;

@@ -6,9 +6,15 @@ import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
 import java.util.List;
 
 public interface VendorService {
-     VendorInfoDto create(VendorInfoDto vendor);
-     VendorInfoDto getVendor(String userName);
+    VendorInfoDto create(VendorInfoDto vendorInfo);
+
+    VendorInfoDto getByUsername(String userName);
+
+    VendorInfoDto getById(Long id);
 
     List<VendorInfoDto> getVendors();
-     void createOrUpdatePwd(VendorSubscriptionRequestDto vendorSubreption) ;
+
+    VendorInfoDto update(VendorInfoDto vendorInfo);
+
+    void createOrUpdatePwd(VendorSubscriptionRequestDto vendorSubscription);
 }

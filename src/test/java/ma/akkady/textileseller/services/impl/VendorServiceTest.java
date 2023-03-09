@@ -32,7 +32,7 @@ public class VendorServiceTest {
     public void testCreate() {
         VendorInfoDto vendorInfoDto = new VendorInfoDto();
         vendorInfoDto.setName("Test Vendor");
-        vendorInfoDto.setUserName("test@example.com");
+        vendorInfoDto.setUsername("test@example.com");
         vendorInfoDto.setPhone("1234567890");
         vendorInfoDto.setAddress("Test Address");
 
@@ -49,7 +49,7 @@ public class VendorServiceTest {
         VendorInfoDto createdVendor = vendorService.create(vendorInfoDto);
 
         Assertions.assertEquals(vendor.getName(), createdVendor.getName());
-        Assertions.assertEquals(vendor.getUsername(), createdVendor.getUserName());
+        Assertions.assertEquals(vendor.getUsername(), createdVendor.getUsername());
         Assertions.assertEquals(vendor.getPhone(), createdVendor.getPhone());
         Assertions.assertEquals(vendor.getAddress(), createdVendor.getAddress());
     }

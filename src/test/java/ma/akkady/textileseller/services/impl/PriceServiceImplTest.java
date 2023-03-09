@@ -50,13 +50,15 @@ public class PriceServiceImplTest {
         Price price2 = new Price();
         price2.setPriceValue(20.0);
         price2.setCurrency(Currency.MAD);
-        List<Price> prices = Arrays.asList(price1, price2);
+        Set<Price> prices = Set.of(price1, price2);
+        product.setPrices(prices);
 
         when(productService.getProduct(ref)).thenReturn(product);
         when(priceRepository.findByProductRef(ref)).thenReturn(Optional.of(prices));
 
-        Set<Price> result = priceService.getPricesByProductRef(ref);
-        assertEquals(prices, result);
+        Set<Price> result1 = priceService.getPricesByProductRef(ref);
+        Set<Price> result2 = productService.getProduct(ref).getPrices();
+        assertEquals(result1, result2);
 
         verify(productService, times(1)).getProduct(ref);
         verify(priceRepository, times(1)).findByProductRef(ref);

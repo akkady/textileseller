@@ -31,14 +31,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Product getProduct(String ref) {
+    public Product getByIdOrThrow(String ref) {
         log.info("Retrieve product by ref {}",ref);
         return productRepository.findByRef(ref)
                 .orElseThrow(() -> new ProductNotFoundException("No product was stored with ref " + ref));
     }
 
     @Override
-    public Product getProduct(Long id) {
+    public Product getByIdOrThrow(Long id) {
         log.info("Retrieve product by id {}",id);
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("No product was stored with id : " + id));
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product update(Product product) {
         log.info("Updating product with reference {}",product.getRef());
-        getProduct(product.getId());
+        getByIdOrThrow(product.getId());
         return productRepository.save(product);
     }
 }

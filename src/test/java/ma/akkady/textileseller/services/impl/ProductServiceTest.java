@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +70,7 @@ class ProductServiceTest {
 
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
 
-        Product retrievedProduct = productService.getProduct(product.getId());
+        Product retrievedProduct = productService.getByIdOrThrow(product.getId());
 
         assertEquals(product.getId(), retrievedProduct.getId());
         assertEquals(product.getName(), retrievedProduct.getName());
@@ -93,7 +91,7 @@ class ProductServiceTest {
 
         when(productRepository.findByRef(ref)).thenReturn(Optional.of(product));
 
-        Product retrievedProduct = productService.getProduct(ref);
+        Product retrievedProduct = productService.getByIdOrThrow(ref);
 
         assertEquals(product.getId(), retrievedProduct.getId());
         assertEquals(product.getName(), retrievedProduct.getName());

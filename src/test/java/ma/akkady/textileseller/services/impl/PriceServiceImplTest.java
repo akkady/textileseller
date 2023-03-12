@@ -53,14 +53,14 @@ public class PriceServiceImplTest {
         Set<Price> prices = Set.of(price1, price2);
         product.setPrices(prices);
 
-        when(productService.getProduct(ref)).thenReturn(product);
+        when(productService.getByIdOrThrow(ref)).thenReturn(product);
         when(priceRepository.findByProductRef(ref)).thenReturn(Optional.of(prices));
 
         Set<Price> result1 = priceService.getPricesByProductRef(ref);
-        Set<Price> result2 = productService.getProduct(ref).getPrices();
+        Set<Price> result2 = productService.getByIdOrThrow(ref).getPrices();
         assertEquals(result1, result2);
 
-        verify(productService, times(1)).getProduct(ref);
+        verify(productService, times(1)).getByIdOrThrow(ref);
         verify(priceRepository, times(1)).findByProductRef(ref);
     }
 
@@ -68,11 +68,11 @@ public class PriceServiceImplTest {
     void getPricesByProductRef_whenProductDoesNotExist() {
         String ref = "productRef";
 
-        when(productService.getProduct(ref)).thenThrow(new ProductNotFoundException());
+        when(productService.getByIdOrThrow(ref)).thenThrow(new ProductNotFoundException());
 
         assertThrows(ProductNotFoundException.class, () -> priceService.getPricesByProductRef(ref));
 
-        verify(productService, times(1)).getProduct(ref);
+        verify(productService, times(1)).getByIdOrThrow(ref);
         verify(priceRepository, times(0)).findByProductRef(ref);
     }
 
@@ -80,12 +80,12 @@ public class PriceServiceImplTest {
     void getPricesByProductRef_whenPricesDoNotExist() {
         String ref = "productRef";
 
-        when(productService.getProduct(ref)).thenReturn(new Product());
+        when(productService.getByIdOrThrow(ref)).thenReturn(new Product());
         when(priceRepository.findByProductRef(ref)).thenReturn(Optional.empty());
 
         assertThrows(PriceNotFoundException.class, () -> priceService.getPricesByProductRef(ref));
 
-        verify(productService, times(1)).getProduct(ref);
+        verify(productService, times(1)).getByIdOrThrow(ref);
         verify(priceRepository, times(1)).findByProductRef(ref);
     }
 
@@ -98,13 +98,13 @@ public class PriceServiceImplTest {
         Product product = new Product();
         product.setRef(ref);
 
-        when(productService.getProduct(ref)).thenReturn(product);
+        when(productService.getByIdOrThrow(ref)).thenReturn(product);
         when(priceRepository.save(price)).thenReturn(price);
 
         Price result = priceService.createForProduct(price, ref);
         assertEquals(price, result);
 
-        verify(productService, times(1)).getProduct(ref);
+        verify(productService, times(1)).getByIdOrThrow(ref);
         verify(priceRepository, times(1)).save(price);
     }
 
@@ -115,10 +115,10 @@ public class PriceServiceImplTest {
         price.setPriceValue(10.0);
         price.setCurrency(Currency.USD);
 
-        when(productService.getProduct(ref)).thenThrow(new ProductNotFoundException());
+        when(productService.getByIdOrThrow(ref)).thenThrow(new ProductNotFoundException());
 
         assertThrows(ProductNotFoundException.class, () -> priceService.createForProduct(price, ref));
 
-        verify(productService, times(1)).getProduct(ref);
+        verify(productService, times(1)).getByIdOrThrow(ref);
     }
 }

@@ -42,13 +42,13 @@ public class ProductController {
     @GetMapping(value = PRODUCTS.SEARCH_BY_ID)
     @ApiOperation(value = "Get product by id", response = Product.class)
     public ResponseEntity<Product> getProductById(@PathVariable @NotBlank @ApiParam(value = "Product id", required = true) Long id) {
-        Product product = productService.getProduct(id);
+        Product product = productService.getByIdOrThrow(id);
         return ResponseEntity.ok().body(product);
     }
     @GetMapping(value = PRODUCTS.SEARCH, params = "ref")
     @ApiOperation(value = "Get product by reference", response = Product.class)
     public ResponseEntity<Product> getProductByRef(@RequestParam("ref") @NotBlank @ApiParam(value = "Product reference", required = true) String ref) {
-        Product product = productService.getProduct(ref);
+        Product product = productService.getByIdOrThrow(ref);
         return ResponseEntity.ok().body(product);
     }
     @GetMapping(value = PRODUCTS.SEARCH, params = "name")

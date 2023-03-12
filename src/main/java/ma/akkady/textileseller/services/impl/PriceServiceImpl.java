@@ -49,7 +49,7 @@ public class PriceServiceImpl implements PriceService {
         Assert.notNull(productRef, "Make sure to provide a valid product reference");
         Assert.notNull(price.getCurrency(), "The currency should not be null");
 
-        Product product = productService.getProduct(productRef);
+        Product product = productService.getByIdOrThrow(productRef);
         price = priceRepository.save(price);
         price.setProduct(product);
 
@@ -68,7 +68,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Price getPriceWithCurrencyForProduct(Currency currency, String productRef) {
         log.info("Retrieve price for product by reference {} and currency {}",productRef,currency);
-        Product product = productService.getProduct(productRef);
+        Product product = productService.getByIdOrThrow(productRef);
 
         return product.getPrices().stream()
                 .filter(v -> v.getCurrency().equals(currency))

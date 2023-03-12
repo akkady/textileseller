@@ -54,6 +54,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDisplayedDto(invoice);
     }
 
+    @Override
+    public Invoice getByIdOrThrow(Long id) {
+        return null;
+    }
+
 
     @Override
     public InvoiceCurrencyDto chooseCurrency(InvoiceCurrencyDto invoiceCurrency) {
@@ -61,7 +66,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoice = invoiceRepository.getReferenceById(invoiceCurrency.getInvoiceId());
         invoice.setCurrency(invoiceCurrency.getCurrency());
 
-        boolean isProductPricePresent = productService.getProduct(invoiceCurrency.getInitProductRef())
+        boolean isProductPricePresent = productService.getByIdOrThrow(invoiceCurrency.getInitProductRef())
                 .getPrices()
                 .stream()
                 .anyMatch(price -> price.getCurrency().equals(invoiceCurrency.getCurrency()));
@@ -73,7 +78,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceEntryDto addEntry(InvoiceEntryDto entryDto) {
         log.info("Adding entry with value {} to invoice with id {}", entryDto.getEntry(), entryDto.getInvoiceId());
-//        Product product = productService.getProduct(entryDto.getProductId());
+//        Product product = productService.getByIdOrThrow(entryDto.getProductId());
 //        Invoice invoice = invoiceRepository.findById(entryDto.getInvoiceId())
 //                .orElseThrow(InvoiceNotFoundException::new);
 

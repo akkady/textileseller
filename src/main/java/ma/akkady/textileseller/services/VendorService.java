@@ -10,7 +10,7 @@ public interface VendorService {
 
     VendorInfoDto getByUsername(String userName);
 
-    VendorInfoDto getById(Long id);
+    VendorInfoDto getByIdOrThrow(Long id);
 
     List<VendorInfoDto> getVendors();
 

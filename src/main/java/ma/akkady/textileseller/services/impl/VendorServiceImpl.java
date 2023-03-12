@@ -47,7 +47,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public VendorInfoDto getById(Long id) {
+    public VendorInfoDto getByIdOrThrow(Long id) {
         log.info("Retrieve vendor by id {}", id);
         return vendorRepository.findById(id)
                 .map(vendorMapper::toDto)

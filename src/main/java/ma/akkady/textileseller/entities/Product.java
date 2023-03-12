@@ -1,16 +1,13 @@
 package ma.akkady.textileseller.entities;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
 
-@Data @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "products")
 public class Product {
     @Id
@@ -23,7 +20,7 @@ public class Product {
     private String description;
     @OneToMany(mappedBy = "product")
     private Set<Price> prices;
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private Set<InvoiceEntry> entries;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "product")
+//    private Set<InvoiceEntry> entries;
 }

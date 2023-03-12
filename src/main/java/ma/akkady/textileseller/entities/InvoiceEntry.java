@@ -1,11 +1,13 @@
 package ma.akkady.textileseller.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
-
-@Data @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "invoice_entries")
 
 public class InvoiceEntry {

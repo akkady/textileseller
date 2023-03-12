@@ -44,7 +44,7 @@ public class PriceController {
         return priceService.createForProduct(price, productRef);
     }
 
-    @PutMapping("/")
+    @PutMapping
     @ApiOperation(value = "Update an existing price", response = Price.class)
     public Price updateValue(
             @ApiParam(value = "Price information to update", required = true) @RequestBody Price price) {

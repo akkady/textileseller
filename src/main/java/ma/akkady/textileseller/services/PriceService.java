@@ -9,6 +9,8 @@ import java.util.Set;
 public interface PriceService {
     List<Currency> getCurrencies();
 
+    Price getByIdOrThrow(Long id);
+
     Set<Price> getPricesByProductRef(String ref);
 
     Price createForProduct(Price price, String productRef);

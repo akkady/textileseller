@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.VendorInfoDto;
 import ma.akkady.textileseller.dtos.VendorSubscriptionRequestDto;
 import ma.akkady.textileseller.services.VendorService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,7 +96,7 @@ public class VendorController {
             @ApiResponse(code = 500, message = "Internal server error")
     })
     public VendorInfoDto getVendorById(@PathVariable("id") @NotNull Long id) {
-        return vendorService.getById(id);
+        return vendorService.getByIdOrThrow(id);
     }
 }
 

@@ -20,7 +20,4 @@ public class Product {
     private String description;
     @OneToMany(mappedBy = "product")
     private Set<Price> prices;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "product")
-//    private Set<InvoiceEntry> entries;
 }

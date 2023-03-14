@@ -19,7 +19,8 @@ import java.util.*;
 /**
  * @author younes akkad
  */
-@Service @Transactional
+@Service
+@Transactional
 @RequiredArgsConstructor
 public class PriceServiceImpl implements PriceService {
 
@@ -39,13 +40,13 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Set<Price> getPricesByProductRef(String ref) {
-        log.info("Retrieve Price by product reference {}",ref);
+        log.info("Retrieve Price by product reference {}", ref);
         return priceRepository.findByProductRef(ref).orElse(Collections.emptySet());
     }
 
     @Override
     public Price createForProduct(Price price, String productRef) {
-        log.info("Create price {} for product with reference {}",price,productRef);
+        log.info("Create price {} for product with reference {}", price, productRef);
         Assert.notNull(productRef, "Make sure to provide a valid product reference");
         Assert.notNull(price.getCurrency(), "The currency should not be null");
 
@@ -67,13 +68,13 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price getPriceWithCurrencyForProduct(Currency currency, String productRef) {
-        log.info("Retrieve price for product by reference {} and currency {}",productRef,currency);
+        log.info("Retrieve price for product by reference {} and currency {}", productRef, currency);
         Product product = productService.getByIdOrThrow(productRef);
 
         return product.getPrices().stream()
                 .filter(v -> v.getCurrency().equals(currency))
                 .findFirst()
-                .orElseThrow(() -> new PriceNotFoundException("This product has no price with this currency"));
+                .orElseThrow(() -> new PriceNotFoundException("This product has no price with this currency : " + currency.toString()));
     }
 }
 

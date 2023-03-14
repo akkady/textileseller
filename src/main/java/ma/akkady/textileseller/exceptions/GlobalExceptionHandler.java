@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(PriceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePriceNotFoundException(ProductNotFoundException ex) {
+    public ResponseEntity<ErrorResponse> handlePriceNotFoundException(PriceNotFoundException ex) {
         logger.error("Price not found: ", ex);
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);

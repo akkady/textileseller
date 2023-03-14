@@ -1,6 +1,6 @@
 package ma.akkady.textileseller.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,8 +17,9 @@ public class InvoiceEntry {
     private Long id;
     private Double entry;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
     private Invoice invoice;
     @ManyToOne
+    @JsonIgnore
     private Product product;
 }

@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.akkady.textileseller.entities.Client;
 import ma.akkady.textileseller.entities.Currency;
-import ma.akkady.textileseller.entities.Product;
-import ma.akkady.textileseller.entities.Vendor;
 
 import java.util.List;
 import java.util.Map;
@@ -24,5 +22,5 @@ public class InvoiceToDisplayDto {
     private Client client;
     private VendorInfoDto vendor;
     private Currency currency;
-    private Map<Product,List<Double>> entries;
+    private Map<String,List<Double>> entries;
 }

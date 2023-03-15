@@ -3,6 +3,7 @@ package ma.akkady.textileseller.mappers;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
 import ma.akkady.textileseller.entities.Invoice;
 import ma.akkady.textileseller.entities.InvoiceEntry;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +19,9 @@ public interface InvoiceMapper {
     @Mapping(target = "invoiceRef", source = "ref")
     @Mapping(target = "entries", source = "entries" ,defaultExpression = "java(entriesToMap)")
     InvoiceToDisplayDto toDisplayedDto(Invoice invoice);
+    @InheritInverseConfiguration
+    @Mapping(target = "entries", ignore = true)
+    Invoice toEntity(InvoiceToDisplayDto toDisplayDto);
 
     List<InvoiceToDisplayDto> toDisplayedDtos(List<Invoice> invoices);
 

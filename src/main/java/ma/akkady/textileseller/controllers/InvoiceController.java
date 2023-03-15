@@ -2,6 +2,8 @@ package ma.akkady.textileseller.controllers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
@@ -19,15 +21,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/invoices")
 @RequiredArgsConstructor
-@Api(value ="Invoice Management system" ,tags = "Invoices")
+@Api(value = "Invoice Management system", tags = "Invoices")
 public class InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    @PostMapping("/init")
+    /*    @PostMapping("/init")
+        @ApiOperation(value = "Initialize a new invoice", response = InvoiceToDisplayDto.class)
+        public ResponseEntity<InvoiceToDisplayDto> init(@RequestParam("clientCode") @NotBlank String clientId ,@RequestParam("vendorId") @NotNull Long vendorId) {
+            InvoiceToDisplayDto invoice = invoiceService.init(clientId,vendorId);
+            return new ResponseEntity<>(invoice, HttpStatus.CREATED);
+        }*/
+    @PostMapping("/create")
     @ApiOperation(value = "Initialize a new invoice", response = InvoiceToDisplayDto.class)
-    public ResponseEntity<InvoiceToDisplayDto> init(@RequestParam("clientCode") @NotBlank String clientId ,@RequestParam("vendorId") @NotNull Long vendorId) {
-        InvoiceToDisplayDto invoice = invoiceService.init(clientId,vendorId);
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Invoice initialized", response = InvoiceToDisplayDto.class), @ApiResponse(code = 400, message = "Invalid data")})
+    public ResponseEntity<InvoiceToDisplayDto> create(@RequestBody InvoiceToDisplayDto invoiceDto) {
+        InvoiceToDisplayDto invoice = invoiceService.create(invoiceDto);
         return new ResponseEntity<>(invoice, HttpStatus.CREATED);
     }
 

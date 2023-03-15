@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class InvoiceEntryDto {
     private Long id;
     @NotNull(message = "Product id should not be empty")

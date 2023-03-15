@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter @Setter @NoArgsConstructor
 @Entity @Table(name = "products")
@@ -18,6 +17,6 @@ public class Product {
     private String ref;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "product")
-    private Set<Price> prices;
+
+    private double basePrice;
 }

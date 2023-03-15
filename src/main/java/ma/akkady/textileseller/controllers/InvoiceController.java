@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
-import ma.akkady.textileseller.dtos.InvoiceInitDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
 import ma.akkady.textileseller.services.InvoiceService;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class InvoiceController {
     public ResponseEntity<InvoiceCurrencyDto> chooseCurrency(
             @RequestBody @Valid InvoiceCurrencyDto invoiceCurrency
     ) {
-        invoiceCurrency = invoiceService.chooseCurrency(invoiceCurrency);
+        invoiceCurrency = invoiceService.changeCurrency(invoiceCurrency);
         return new ResponseEntity<>(invoiceCurrency, HttpStatus.OK);
     }
 

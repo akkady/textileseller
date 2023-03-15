@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final Logger log = LoggerFactory.getLogger(PriceServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository productRepository;
 
     @Override

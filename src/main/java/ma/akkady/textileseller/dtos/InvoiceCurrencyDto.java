@@ -13,6 +13,4 @@ import ma.akkady.textileseller.entities.Currency;
 public class InvoiceCurrencyDto {
     private Long invoiceId;
     private Currency currency;
-    private String initProductRef;
-    private boolean isInitProductPricePresent = false;
 }

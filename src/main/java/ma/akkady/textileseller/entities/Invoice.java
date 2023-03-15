@@ -20,7 +20,7 @@ public class Invoice {
     @Column(nullable = false,unique = true)
     private String ref;
     @Enumerated(EnumType.ORDINAL)
-    private Currency currency;
+    private Currency currency = Currency.MAD;
     @ManyToOne
     private Vendor vendor;
     @ManyToOne

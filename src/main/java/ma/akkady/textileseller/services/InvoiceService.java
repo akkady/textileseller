@@ -12,7 +12,7 @@ public interface InvoiceService {
 
     Invoice getByIdOrThrow(Long id);
 
-    InvoiceCurrencyDto chooseCurrency(InvoiceCurrencyDto invoiceCurrency);
+    InvoiceCurrencyDto changeCurrency(InvoiceCurrencyDto invoiceCurrency);
 
     InvoiceEntryDto addEntry(InvoiceEntryDto invoiceEntry);
 

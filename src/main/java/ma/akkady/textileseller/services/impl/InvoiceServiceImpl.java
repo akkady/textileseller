@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
-import ma.akkady.textileseller.entities.*;
+import ma.akkady.textileseller.entities.Client;
+import ma.akkady.textileseller.entities.Invoice;
+import ma.akkady.textileseller.entities.InvoiceEntry;
+import ma.akkady.textileseller.entities.Vendor;
 import ma.akkady.textileseller.exceptions.InvoiceNotFoundException;
 import ma.akkady.textileseller.exceptions.UserNotFoundException;
 import ma.akkady.textileseller.mappers.InvoiceEntryMapper;
@@ -14,7 +17,6 @@ import ma.akkady.textileseller.repositories.InvoiceEntryRepository;
 import ma.akkady.textileseller.repositories.InvoiceRepository;
 import ma.akkady.textileseller.repositories.VendorRepository;
 import ma.akkady.textileseller.services.InvoiceService;
-import ma.akkady.textileseller.services.ProductService;
 import ma.akkady.textileseller.utils.ReferenceGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final Logger log = LoggerFactory.getLogger(InvoiceServiceImpl.class);
     private final InvoiceRepository invoiceRepository;
-    private final ProductService productService;
     private final InvoiceEntryRepository entryRepository;
     private final ClientRepository clientRepository;
     private final VendorRepository vendorRepository;
@@ -56,21 +57,17 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice getByIdOrThrow(Long id) {
-        return null;
+        log.info("Retrieving invoice with id {}",id);
+        return invoiceRepository.findById(id)
+                .orElseThrow(InvoiceNotFoundException::new);
     }
 
 
     @Override
-    public InvoiceCurrencyDto chooseCurrency(InvoiceCurrencyDto invoiceCurrency) {
+    public InvoiceCurrencyDto changeCurrency(InvoiceCurrencyDto invoiceCurrency) {
         log.info("Setting currency {} for invoice with id {}", invoiceCurrency.getCurrency(), invoiceCurrency.getInvoiceId());
-        Invoice invoice = invoiceRepository.getReferenceById(invoiceCurrency.getInvoiceId());
+        Invoice invoice = getByIdOrThrow(invoiceCurrency.getInvoiceId());
         invoice.setCurrency(invoiceCurrency.getCurrency());
-
-        boolean isProductPricePresent = productService.getByIdOrThrow(invoiceCurrency.getInitProductRef())
-                .getPrices()
-                .stream()
-                .anyMatch(price -> price.getCurrency().equals(invoiceCurrency.getCurrency()));
-        invoiceCurrency.setInitProductPricePresent(isProductPricePresent);
 
         return invoiceCurrency;
     }
@@ -78,9 +75,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceEntryDto addEntry(InvoiceEntryDto entryDto) {
         log.info("Adding entry with value {} to invoice with id {}", entryDto.getEntry(), entryDto.getInvoiceId());
-//        Product product = productService.getByIdOrThrow(entryDto.getProductId());
-//        Invoice invoice = invoiceRepository.findById(entryDto.getInvoiceId())
-//                .orElseThrow(InvoiceNotFoundException::new);
 
         InvoiceEntry entry = entryMapper.toEntity(entryDto);
 

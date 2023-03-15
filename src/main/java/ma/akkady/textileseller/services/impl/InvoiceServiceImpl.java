@@ -38,8 +38,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceMapper invoiceMapper;
     private final InvoiceEntryMapper entryMapper;
 
-    @Override
-    public InvoiceToDisplayDto init(String clientCode, Long vendorId) {
+    //@Override
+ /*   public InvoiceToDisplayDto init(String clientCode, Long vendorId) {
         log.info("Initializing invoice for client {}", clientCode);
         String invoiceReference = ReferenceGenerator.genNumeric();
         Client client = clientRepository.findByCode(clientCode).orElseThrow(UserNotFoundException::new);
@@ -53,11 +53,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice = invoiceRepository.save(invoice);
 
         return invoiceMapper.toDisplayedDto(invoice);
-    }
+    }*/
 
     @Override
     public Invoice getByIdOrThrow(Long id) {
-        log.info("Retrieving invoice with id {}",id);
+        log.info("Retrieving invoice with id {}", id);
         return invoiceRepository.findById(id)
                 .orElseThrow(InvoiceNotFoundException::new);
     }
@@ -73,6 +73,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    public InvoiceToDisplayDto create(InvoiceToDisplayDto invoice) {
+        log.info("Initializing invoice for client {}", invoice.getClient().getCode());
+        String invoiceReference = ReferenceGenerator.genNumeric();
+        Invoice invoice1 = invoiceMapper.toEntity(invoice);
+        invoice1.setRef(invoiceReference);
+        return invoiceMapper.toDisplayedDto(invoiceRepository.save(invoice1));
+    }
+
+    @Override
     public InvoiceEntryDto addEntry(InvoiceEntryDto entryDto) {
         log.info("Adding entry with value {} to invoice with id {}", entryDto.getEntry(), entryDto.getInvoiceId());
 
@@ -85,7 +94,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceToDisplayDto getInvoice(String invoiceRef) {
-        log.info("Retrieving invoice with reference {}",invoiceRef);
+        log.info("Retrieving invoice with reference {}", invoiceRef);
         return invoiceRepository.findByRef(invoiceRef)
                 .map(invoiceMapper::toDisplayedDto)
                 .orElseThrow(InvoiceNotFoundException::new);
@@ -93,19 +102,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceToDisplayDto> getInvoiceByClient(String clientCode) {
-        log.info("Retrieving invoices for client with code {}",clientCode);
+        log.info("Retrieving invoices for client with code {}", clientCode);
         return invoiceMapper.toDisplayedDtos(invoiceRepository.findByClientCode(clientCode));
     }
 
     @Override
     public List<InvoiceToDisplayDto> getInvoiceByVendor(String username) {
-        log.info("Retrieving invoices for vendor with username {}",username);
+        log.info("Retrieving invoices for vendor with username {}", username);
         return invoiceMapper.toDisplayedDtos(invoiceRepository.findByVendorUsername(username));
     }
 
     @Override
     public void delete(String invoiceRef) {
-        log.info("Deleting invoice with reference {}",invoiceRef);
+        log.info("Deleting invoice with reference {}", invoiceRef);
         invoiceRepository.deleteByRef(invoiceRef);
     }
 

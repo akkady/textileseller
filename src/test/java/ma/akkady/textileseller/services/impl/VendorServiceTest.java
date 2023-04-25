@@ -37,9 +37,9 @@ public class VendorServiceTest {
         vendorInfoDto.setAddress("Test Address");
 
         Vendor vendor = new Vendor();
-        vendor.setName("Test Vendor");
+        vendor.setFirstname("Test Vendor");
         vendor.setUsername("test@example.com");
-        vendor.setPhone("1234567890");
+        vendor.setPhoneNumber("1234567890");
         vendor.setAddress("Test Address");
 
         when(vendorMapper.toEntity(any(VendorInfoDto.class))).thenReturn(vendor);
@@ -48,9 +48,9 @@ public class VendorServiceTest {
 
         VendorInfoDto createdVendor = vendorService.create(vendorInfoDto);
 
-        Assertions.assertEquals(vendor.getName(), createdVendor.getName());
+        Assertions.assertEquals(vendor.getFirstname(), createdVendor.getName());
         Assertions.assertEquals(vendor.getUsername(), createdVendor.getUsername());
-        Assertions.assertEquals(vendor.getPhone(), createdVendor.getPhone());
+        Assertions.assertEquals(vendor.getPhoneNumber(), createdVendor.getPhone());
         Assertions.assertEquals(vendor.getAddress(), createdVendor.getAddress());
     }
 

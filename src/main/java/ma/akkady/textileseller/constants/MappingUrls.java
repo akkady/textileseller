@@ -1,9 +1,12 @@
 package ma.akkady.textileseller.constants;
 
 public class MappingUrls {
+    private MappingUrls(){}
+
     public static final String API_URL = "/api/v1";
 
     public static class CLIENTS {
+        private CLIENTS(){}
         public static final String TAG = "Clients";
         public static final String BASE_URL = "/clients";
         public static final String BY_CODE = "/{code}";
@@ -14,6 +17,7 @@ public class MappingUrls {
     }
 
     public static class VENDORS {
+        private VENDORS(){}
         public static final String TAG = "Vendors";
         public static final String BASE_URL = "/vendors";
         public static final String REGISTRATION = "/subscribe";
@@ -24,6 +28,8 @@ public class MappingUrls {
     }
 
     public static class PRODUCTS {
+        private PRODUCTS(){}
+
         public static final String TAG = "Products";
         public static final String BASE_URL = "/products";
         public static final String SEARCH = "/search";

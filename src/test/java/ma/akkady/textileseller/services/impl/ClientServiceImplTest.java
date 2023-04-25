@@ -28,7 +28,7 @@ public class ClientServiceImplTest {
     public void testGetByCode() {
         // given
         String code = "6545245";
-        Client expectedClient = new Client(code, "John Doe","0656545245", "john.doe@example.com");
+        Client expectedClient = new Client(code, "John","Doe","0656545245", "john.doe@example.com");
         when(clientRepository.findByCode(code)).thenReturn(Optional.of(expectedClient));
 
         // when
@@ -44,22 +44,22 @@ public class ClientServiceImplTest {
         // given
         String name = "Doe";
         List<Client> expectedClients = Arrays.asList(
-                new Client("1", "John Doe","0656545245", "john.doe@example.com"),
-                new Client("2", "Jane Doe", "0656545245","jane.doe@example.com"));
-        when(clientRepository.findByNameContaining(name)).thenReturn(expectedClients);
+                new Client("1", "John","Doe","0656545245", "john.doe@example.com"),
+                new Client("2", "Jane","Doe", "0656545245","jane.doe@example.com"));
+        when(clientRepository.findByFirstnameContaining(name)).thenReturn(expectedClients);
 
         // when
         List<Client> actualClients = clientService.getByName(name);
 
         // then
         assertEquals(expectedClients, actualClients);
-        verify(clientRepository).findByNameContaining(name);
+        verify(clientRepository).findByFirstnameContaining(name);
     }
 
     @Test
     public void testCreate() {
         // given
-        Client clientToCreate = new Client("1", "John Doe","0656545245", "john.doe@example.com");
+        Client clientToCreate = new Client("1", "John","Doe","0656545245", "john.doe@example.com");
         when(clientRepository.save(clientToCreate)).thenReturn(clientToCreate);
 
         // when
@@ -74,8 +74,8 @@ public class ClientServiceImplTest {
     public void testGetAll() {
         // given
         List<Client> expectedClients = Arrays.asList(
-                new Client("1", "John Doe","0656545245", "john.doe@example.com"),
-                new Client("2", "Jane Doe","0656545245", "jane.doe@example.com"));
+                new Client("1", "John", "Doe","0656545245", "john.doe@example.com"),
+                new Client("2", "Jane","Doe","0656545245", "jane.doe@example.com"));
         when(clientRepository.findAll()).thenReturn(expectedClients);
 
         // when
@@ -101,7 +101,7 @@ public class ClientServiceImplTest {
     @Test
     public void testUpdate() {
         // given
-        Client clientToUpdate = new Client("1", "John Doe","0656545245", "john.doe@example.com");
+        Client clientToUpdate = new Client("1", "John","Doe","0656545245", "john.doe@example.com");
         when(clientRepository.findByCode(clientToUpdate.getCode())).thenReturn(Optional.of(clientToUpdate));
         when(clientRepository.save(clientToUpdate)).thenReturn(clientToUpdate);
 

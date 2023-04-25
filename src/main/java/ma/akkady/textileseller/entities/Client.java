@@ -19,8 +19,8 @@ public class Client extends User {
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private Set<Invoice> invoices;
-    public Client(String code, String name, String phone, String address) {
-        super(null, name, phone, address);
+    public Client(String code, String firstname,String lastname, String phoneNumber, String address) {
+        super(null, firstname,lastname, phoneNumber, address);
         this.code = code;
     }
 }

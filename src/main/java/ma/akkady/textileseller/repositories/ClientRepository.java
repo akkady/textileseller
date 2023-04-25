@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client,Long> {
     void deleteByCode(String code);
 
-    List<Client> findByNameContaining(String name);
+    List<Client> findByFirstnameContaining(String name);
 
     Optional<Client> findByCode(String code);
 }

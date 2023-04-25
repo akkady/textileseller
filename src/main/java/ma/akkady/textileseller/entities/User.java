@@ -16,7 +16,8 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
     @SequenceGenerator(name = "userSequence")
     private Long id;
-    private String name;
-    private String phone;
+    private String firstname;
+    private String lastname;
+    private String phoneNumber;
     private String address;
 }

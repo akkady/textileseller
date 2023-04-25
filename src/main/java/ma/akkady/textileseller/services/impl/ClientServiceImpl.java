@@ -32,7 +32,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> getByName(String name) {
         log.info("Retrieving clients with name contains {}",name);
-        return clientRepository.findByNameContaining(name);
+        return clientRepository.findByFirstnameContaining(name);
     }
 
     @Override

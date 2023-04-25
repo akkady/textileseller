@@ -11,8 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "vendors")
 public class Vendor extends User {
 
@@ -21,6 +20,7 @@ public class Vendor extends User {
     private String username;
     private String password;
     @OneToMany(mappedBy = "vendor")
-    private Set<Invoice> invoices ;
-
+    private Set<Invoice> invoices;
+    @OneToMany(mappedBy = "vendor")
+    Set<Product> products;
 }

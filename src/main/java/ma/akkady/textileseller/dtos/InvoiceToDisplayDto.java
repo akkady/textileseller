@@ -19,8 +19,8 @@ import java.util.Map;
 public class InvoiceToDisplayDto {
     private Long id;
     private String invoiceRef;
-    private Client client;
+    private ClientDto client;
     private VendorInfoDto vendor;
     private Currency currency;
-    private Map<String,List<Double>> entries;
+    private Map<ProductDto,List<Double>> entries;
 }

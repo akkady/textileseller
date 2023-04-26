@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VendorInfoDto {
+public class ClientDto {
     private Long id;
     protected String firstname;
     private String lastname;
     private String phoneNumber;
     private String address;
-    private String imageUrl;
-    private String username;
+    private String code;
 }

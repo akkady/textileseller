@@ -31,9 +31,9 @@ public class VendorServiceTest {
     @Test
     public void testCreate() {
         VendorInfoDto vendorInfoDto = new VendorInfoDto();
-        vendorInfoDto.setName("Test Vendor");
+        vendorInfoDto.setFirstname("Test Vendor");
         vendorInfoDto.setUsername("test@example.com");
-        vendorInfoDto.setPhone("1234567890");
+        vendorInfoDto.setPhoneNumber("1234567890");
         vendorInfoDto.setAddress("Test Address");
 
         Vendor vendor = new Vendor();
@@ -48,9 +48,9 @@ public class VendorServiceTest {
 
         VendorInfoDto createdVendor = vendorService.create(vendorInfoDto);
 
-        Assertions.assertEquals(vendor.getFirstname(), createdVendor.getName());
+        Assertions.assertEquals(vendor.getFirstname(), createdVendor.getFirstname());
         Assertions.assertEquals(vendor.getUsername(), createdVendor.getUsername());
-        Assertions.assertEquals(vendor.getPhoneNumber(), createdVendor.getPhone());
+        Assertions.assertEquals(vendor.getPhoneNumber(), createdVendor.getPhoneNumber());
         Assertions.assertEquals(vendor.getAddress(), createdVendor.getAddress());
     }
 

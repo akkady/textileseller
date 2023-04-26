@@ -49,10 +49,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(HttpMessageConversionException.class)
-    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageConversionException ex) {
-        logger.error("Invalid data entered by client");
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Please make sure to enter a valid data");
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(HttpMessageConversionException.class)
+//    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageConversionException ex) {
+//        logger.error("Invalid data entered by client");
+//        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Please make sure to enter a valid data");
+//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+//    }
 }

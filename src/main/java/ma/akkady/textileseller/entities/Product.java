@@ -18,6 +18,4 @@ public class Product {
     private String name;
     private String description;
     private double basePrice;
-    @ManyToOne
-    private Vendor vendor;
 }

@@ -36,5 +36,11 @@ public class MappingUrls {
         public static final String SEARCH_BY_ID = SEARCH + "/{id}";
 
     }
+    public static class Auth {
+        private Auth(){}
+        public static final String BASE = API_URL + "/auth";
+        public static final String REFRESH = BASE + "/refresh";
+        public static final String LOGIN = BASE + "/login";
+    }
 
 }

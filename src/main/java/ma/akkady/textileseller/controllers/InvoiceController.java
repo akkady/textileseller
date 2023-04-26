@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import ma.akkady.textileseller.dtos.InitInvoiceDto;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
@@ -26,17 +27,11 @@ public class InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    /*    @PostMapping("/init")
-        @ApiOperation(value = "Initialize a new invoice", response = InvoiceToDisplayDto.class)
-        public ResponseEntity<InvoiceToDisplayDto> init(@RequestParam("clientCode") @NotBlank String clientId ,@RequestParam("vendorId") @NotNull Long vendorId) {
-            InvoiceToDisplayDto invoice = invoiceService.init(clientId,vendorId);
-            return new ResponseEntity<>(invoice, HttpStatus.CREATED);
-        }*/
-    @PostMapping("/create")
+    @PostMapping("/init")
     @ApiOperation(value = "Initialize a new invoice", response = InvoiceToDisplayDto.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Invoice initialized", response = InvoiceToDisplayDto.class), @ApiResponse(code = 400, message = "Invalid data")})
-    public ResponseEntity<InvoiceToDisplayDto> create(@RequestBody InvoiceToDisplayDto invoiceDto) {
-        InvoiceToDisplayDto invoice = invoiceService.create(invoiceDto);
+    public ResponseEntity<InvoiceToDisplayDto> create(@RequestBody InitInvoiceDto invoiceDto) {
+        InvoiceToDisplayDto invoice = invoiceService.init(invoiceDto);
         return new ResponseEntity<>(invoice, HttpStatus.CREATED);
     }
 
@@ -69,11 +64,11 @@ public class InvoiceController {
 
     @GetMapping(params = "clientCode")
     @ApiOperation(value = "Get invoices by client code", response = List.class)
-    public ResponseEntity<List<InvoiceToDisplayDto>> getInvoicesByClient(
+    public ResponseEntity<List<String >> getInvoicesByClient(
             @RequestParam String clientCode
     ) {
-        List<InvoiceToDisplayDto> invoices = invoiceService.getInvoiceByClient(clientCode);
-        return new ResponseEntity<>(invoices, HttpStatus.OK);
+        List<String> invoiceRefs = invoiceService.getInvoiceByClient(clientCode);
+        return new ResponseEntity<>(invoiceRefs, HttpStatus.OK);
     }
 
     @GetMapping(params = "vendorUsername")

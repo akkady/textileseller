@@ -21,6 +21,6 @@ public class Vendor extends User {
     private String password;
     @OneToMany(mappedBy = "vendor")
     private Set<Invoice> invoices;
-    @OneToMany(mappedBy = "vendor")
+    @OneToMany
     Set<Product> products;
 }

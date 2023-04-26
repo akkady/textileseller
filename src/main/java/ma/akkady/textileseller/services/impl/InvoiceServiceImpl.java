@@ -1,15 +1,13 @@
 package ma.akkady.textileseller.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import ma.akkady.textileseller.dtos.InitInvoiceDto;
 import ma.akkady.textileseller.dtos.InvoiceCurrencyDto;
 import ma.akkady.textileseller.dtos.InvoiceEntryDto;
 import ma.akkady.textileseller.dtos.InvoiceToDisplayDto;
-import ma.akkady.textileseller.entities.Client;
-import ma.akkady.textileseller.entities.Invoice;
-import ma.akkady.textileseller.entities.InvoiceEntry;
-import ma.akkady.textileseller.entities.Vendor;
+import ma.akkady.textileseller.entities.*;
 import ma.akkady.textileseller.exceptions.InvoiceNotFoundException;
-import ma.akkady.textileseller.exceptions.UserNotFoundException;
 import ma.akkady.textileseller.mappers.InvoiceEntryMapper;
 import ma.akkady.textileseller.mappers.InvoiceMapper;
 import ma.akkady.textileseller.repositories.ClientRepository;
@@ -18,19 +16,18 @@ import ma.akkady.textileseller.repositories.InvoiceRepository;
 import ma.akkady.textileseller.repositories.VendorRepository;
 import ma.akkady.textileseller.services.InvoiceService;
 import ma.akkady.textileseller.utils.ReferenceGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class InvoiceServiceImpl implements InvoiceService {
 
-    private final Logger log = LoggerFactory.getLogger(InvoiceServiceImpl.class);
     private final InvoiceRepository invoiceRepository;
     private final InvoiceEntryRepository entryRepository;
     private final ClientRepository clientRepository;
@@ -38,22 +35,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final InvoiceMapper invoiceMapper;
     private final InvoiceEntryMapper entryMapper;
 
-    //@Override
- /*   public InvoiceToDisplayDto init(String clientCode, Long vendorId) {
-        log.info("Initializing invoice for client {}", clientCode);
+    @Override
+    public InvoiceToDisplayDto init(InitInvoiceDto initInvoiceDto) {
+        log.info("Initializing invoice with client id {} ", initInvoiceDto.getClientId());
+        Client client = clientRepository.getReferenceById(initInvoiceDto.getClientId());
+        Vendor vendor = vendorRepository.getReferenceById(initInvoiceDto.getVendorId());
+
         String invoiceReference = ReferenceGenerator.genNumeric();
-        Client client = clientRepository.findByCode(clientCode).orElseThrow(UserNotFoundException::new);
-        Vendor vendor = vendorRepository.getReferenceById(vendorId);
 
         Invoice invoice = new Invoice();
         invoice.setRef(invoiceReference);
-        invoice.setClient(client);
         invoice.setVendor(vendor);
+        invoice.setClient(client);
 
         invoice = invoiceRepository.save(invoice);
 
         return invoiceMapper.toDisplayedDto(invoice);
-    }*/
+    }
 
     @Override
     public Invoice getByIdOrThrow(Long id) {
@@ -101,9 +99,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiceToDisplayDto> getInvoiceByClient(String clientCode) {
+    public List<String> getInvoiceByClient(String clientCode) {
         log.info("Retrieving invoices for client with code {}", clientCode);
-        return invoiceMapper.toDisplayedDtos(invoiceRepository.findByClientCode(clientCode));
+        return invoiceRepository.findByClientCode(clientCode)
+                .stream().map(Invoice::getRef)
+                .collect(Collectors.toList());
     }
 
     @Override

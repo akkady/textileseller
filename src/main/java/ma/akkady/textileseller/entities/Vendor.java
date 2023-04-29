@@ -23,5 +23,5 @@ public class Vendor extends User {
     @OneToMany
     Set<Product> products;
     @ManyToMany(fetch = FetchType.EAGER)
-    Collection<SecurityRole> appRoles = new ArrayList<>();
+    Collection<SecurityRole> roles = new ArrayList<>();
 }

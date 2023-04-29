@@ -24,7 +24,7 @@ import static ma.akkady.textileseller.constants.MappingUrls.VENDORS;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(API_URL + VENDORS.BASE_URL)
+@RequestMapping(VENDORS.BASE_URL)
 @Api(tags = VENDORS.TAG)
 public class VendorController {
 

@@ -14,7 +14,7 @@ import static ma.akkady.textileseller.constants.MappingUrls.API_URL;
 import static ma.akkady.textileseller.constants.MappingUrls.CLIENTS;
 
 @RestController
-@RequestMapping(API_URL + CLIENTS.BASE_URL)
+@RequestMapping(CLIENTS.BASE_URL)
 @RequiredArgsConstructor
 @Api(value = "Clients API", tags = CLIENTS.TAG)
 public class ClientController {

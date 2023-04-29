@@ -17,7 +17,7 @@ import static ma.akkady.textileseller.constants.MappingUrls.API_URL;
 import static ma.akkady.textileseller.constants.MappingUrls.PRODUCTS;
 
 @RestController
-@RequestMapping(API_URL + PRODUCTS.BASE_URL)
+@RequestMapping( PRODUCTS.BASE_URL)
 @RequiredArgsConstructor
 @Api(value = "Product Management System", description = "Operations pertaining to products in Product Management System", tags = PRODUCTS.TAG)
 public class ProductController {

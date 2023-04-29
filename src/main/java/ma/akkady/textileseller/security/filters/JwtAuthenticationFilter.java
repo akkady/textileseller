@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("attemptAuthentication");
+        log.info("[Authentication filter] attemptAuthentication");
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null; // Read the request body
         try {
@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
             log.error("AUTH Bad request {}", e.getMessage());
+            response.setHeader("error-login",e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -51,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("successfulAuthentication");
+        log.info("[Authentication filter] successfulAuthentication");
         //user info
         User user = (User) authResult.getPrincipal();
         List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());

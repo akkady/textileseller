@@ -8,7 +8,7 @@ public class MappingUrls {
     public static class CLIENTS {
         private CLIENTS(){}
         public static final String TAG = "Clients";
-        public static final String BASE_URL = "/clients";
+        public static final String BASE_URL = API_URL+"/clients";
         public static final String BY_CODE = "/{code}";
         public static final String SEARCH = "/search";
         public static final String SEARCH_BY_CODE = SEARCH + BY_CODE;
@@ -19,7 +19,7 @@ public class MappingUrls {
     public static class VENDORS {
         private VENDORS(){}
         public static final String TAG = "Vendors";
-        public static final String BASE_URL = "/vendors";
+        public static final String BASE_URL = API_URL+"/vendors";
         public static final String REGISTRATION = "/subscribe";
         public static final String PASSWORD = "/password";
         public static final String SEARCH = "/search";
@@ -31,7 +31,7 @@ public class MappingUrls {
         private PRODUCTS(){}
 
         public static final String TAG = "Products";
-        public static final String BASE_URL = "/products";
+        public static final String BASE_URL =API_URL+ "/products";
         public static final String SEARCH = "/search";
         public static final String SEARCH_BY_ID = SEARCH + "/{id}";
 

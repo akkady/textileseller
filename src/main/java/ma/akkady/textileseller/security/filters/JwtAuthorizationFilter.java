@@ -2,6 +2,7 @@ package ma.akkady.textileseller.security.filters;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ma.akkady.textileseller.constants.MappingUrls;
 import ma.akkady.textileseller.security.services.TokenService;
 import org.springframework.http.HttpHeaders;
@@ -23,12 +24,14 @@ import java.util.stream.Collectors;
 
 import static ma.akkady.textileseller.constants.SecurityConstants.BEARER_PREFIX;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("[Authorization filter] Request protected resource ");
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (hasToken(authHeader)) {
             try {

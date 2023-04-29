@@ -12,6 +12,7 @@ import ma.akkady.textileseller.services.VendorService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class VendorServiceImpl implements VendorService {
 
     private final Logger log = LoggerFactory.getLogger(VendorServiceImpl.class);
+    private final PasswordEncoder passwordEncoder;
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
 
@@ -84,8 +86,9 @@ public class VendorServiceImpl implements VendorService {
         }
 
         if (StringUtils.isEmpty(oldPassword)) {
-            vendor.setPassword(newPassword);
-        } else if (isSamePwd(enteredOldPassword, oldPassword)) {
+            String encoded = passwordEncoder.encode(newPassword);
+            vendor.setPassword(encoded);
+        } else if (passwordEncoder.matches(enteredOldPassword,oldPassword)) {
             vendor.setPassword(newPassword);
         } else {
             throw new PasswordConfirmationException("Invalid old password");

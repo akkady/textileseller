@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
@@ -23,4 +22,6 @@ public class Vendor extends User {
     private Set<Invoice> invoices;
     @OneToMany
     Set<Product> products;
+    @ManyToMany(fetch = FetchType.EAGER)
+    Collection<SecurityRole> roles = new ArrayList<>();
 }
